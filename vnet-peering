@@ -1,0 +1,18 @@
+create vnet:
+az network vnet create -g neworkdemo -n eastusvnet --address-prefix 10.40.0.0/16 --subnet-name subnet1 --subnet-prefix 10.40.6.0/24
+az network vnet create -g neworkdemo -n westusvnet --address-prefix 10.30.0.0/16 --subnet-name subnet1 --subnet-prefix 10.30.3.0/24
+create vm's:
+az vm create  --name eastusvm --resource-group neworkdemo --vnet-name eastusvnet --subnet subnet1  --admin-username 'azureuser' --admin-password 'Test@123456789' --image 'Win2019Datacenter' --location westus
+az vm create  --name westusvm --resource-group neworkdemo --vnet-name westusvnet --subnet subnet1  --admin-username 'azureuser' --admin-password 'Test@123456789' --image 'Win2019Datacenter' --location westus
+
+create vnet peering via the portal and test the connectivity from one vm to other
+
+open commandprompt on the newly created vm's
+ipconfig - to get the ip address of the vm. 
+ping <remotevm ip> i.e if you are in eastusvm then ping <westusvm-ip>
+
+ping <ip adress> -t  for continuous ping. 
+
+remove the peering and validate we get a request time out.
+
+Also disable the firewall at the OS level on both the vm's. search for defender and change the status to off.

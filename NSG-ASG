@@ -1,0 +1,8 @@
+NSG Demo
+az group create --resource-group nsgdemo --location eastus
+az network vnet create -g nsgdemo -n nsgdemovnet --address-prefix 10.40.0.0/16 --subnet-name websubnet --subnet-prefix 10.40.6.0/24
+az network vnet subnet create --resource-group nsgdemo --vnet nsgdemovnet   --address-prefixes 10.40.10.0/24 --name dbsubnet
+
+az vm create  --name webvm --resource-group nsgdemo --vnet-name nsgdemovnet --subnet websubnet  --admin-username 'azureuser' --admin-password 'Test@123456789' --image 'Win2019Datacenter' --location eastus --nsg ""
+az vm create  --name dbvm --resource-group nsgdemo --vnet-name nsgdemovnet --subnet dbsubnet  --admin-username 'azureuser' --admin-password 'Test@123456789' --image 'Win2019Datacenter' --location eastus --nsg ""
+
